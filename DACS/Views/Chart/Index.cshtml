@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="content-wrapper">
+    <div class="card card-danger">
+        <div class="card-header">
+            <h3 class="card-title">Thống kê thiết bị đã tạo</h3>
+
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                    <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <canvas id="donutChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+
+
+
+
+
+
+@{
+
+    var sessiondata1 = TempData["data1"] as int?;
+    var sessiondata2 = TempData["data2"] as int?;
+    var sessiondata3 = TempData["data3"] as int?;
+    var sessiondata4 = TempData["data4"] as int?;
+    var sessiondata5 = TempData["data5"] as int?;
+}
+@section js{
+    <script>
+        $(function () {
+
+
+            //- DONUT CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+            var donutData = {
+                labels: [
+                    'Quạt trần',
+                    'Máy tính bàn',
+                    'Máy lạnh',
+                    'Loa',
+                    'Đèn',
+                ],
+                datasets: [
+                    {
+                        data: [@sessiondata1, @sessiondata2,@sessiondata3,@sessiondata4,@sessiondata5],
+                        backgroundColor: ['#f56954', '#00a65a', '##009ea6', '#0003a6', '#a3a600']
+                    }
+                ]
+            }
+            var donutOptions = {
+                maintainAspectRatio: false,
+                responsive: true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            new Chart(donutChartCanvas, {
+                type: 'doughnut',
+                data: donutData,
+                options: donutOptions
+            })
+
+
+
+
+
+
+        })
+    </script>
+
+}
+

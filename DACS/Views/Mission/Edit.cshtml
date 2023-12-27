@@ -1,0 +1,43 @@
+﻿@model DACS.Context.Mission
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLTE.cshtml";
+}
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Thông tin chi tiết</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form action="/Mission/Save" method="post" enctype="multipart/form-data">
+        <div class="card-body">
+            <input type="hidden" name="Id" value="@Model.ID" />
+            <div class="form-group">
+                <label for="mission">Nhiệm vụ</label>
+                <input type="text" class="form-control" id="mission" name="mission" value="@Model.Mission1" placeholder="Nhập nhiệm vụ" required>
+            </div>
+            <div class="form-group">
+                <label for="memberid">Người nhận</label>
+                <input type="text" class="form-control" id="memberid" name="memberid" value="@Model.MemberId" placeholder="Nhập ID người nhận" required>
+            </div>
+            <div class="form-group">
+                <label for="createdate">Ngày giao</label>
+                <input type="text" class="form-control" id="createdate" name="createdate" value="@Model.CreatedDate" placeholder="Hôm nay" readonly>
+            </div>
+            <div class="form-group">
+                <label for="donedate">Ngày hoàn thành</label>
+                <input type="text" class="form-control" id="donedate" name="donedate" value="@Model.DoneDate" placeholder="Chưa xác định" readonly>
+            </div>
+            <div class="form-group">
+                <label for="status">Tình trạng</label>
+                <input type="text" class="form-control" id="status" name="status" value="@Model.Status" placeholder="Chưa hoàn thành" readonly>
+            </div>
+        </div>
+        <a target="_blank" href="@Url.Action("Users","Users")" class="nav-link">Tôi không biết ID nào là của người nào ?</a>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </div>
+    </form>
+</div>
+

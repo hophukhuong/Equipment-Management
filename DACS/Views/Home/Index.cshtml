@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLTE.cshtml";
+}
+
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 font-weight-bold">HỆ THỐNG QUẢN LÝ THIẾT BỊ</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Hướng dẫn sử dụng</a></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>@Html.Action("getReportCount", "Home")</h3>
+
+                    <p>Báo cáo chưa xử lý</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-alert-circled"></i>
+                </div>
+                <a href="Report/Report1" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>@Html.Action("getMissions", "Home")</h3>
+
+                    <p>Giao nhiệm vụ</p>
+                </div>
+                <div class="icon">
+                    <i class="fa-solid fa-house"></i>
+                </div>
+                <a href="Mission/Mission" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>@Html.Action("getEquipment", "Home")</h3>
+
+                    <p>thiết bị</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                </div>
+                <a href="Equipment" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>@Html.Action("getMember", "Home")</h3>
+
+                    <p>Thành viên</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="Member" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <!-- /.row (main row) -->
+    <!-- /.content -->
+
+
+    @{
+        DACS.Context.Member member = new DACS.Context.Member();
+        if (Session["Member"] != null)
+        {
+            member = (DACS.Context.Member)Session["Member"];
+        }
+    }
+
+
+
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách nhiệm vụ của @member.Name</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="Mission" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Mô tả nhiệm vụ</th>
+                        <th>Ngày giao</th>
+                        <th>Ngày hoàn thành</th>
+                        <th>Tình trạng</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+
+
+
+@section Css{
+    <link rel="stylesheet" href="/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+}
+@section Js{
+    <script src="/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/Content/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Content/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/Content/plugins/jszip/jszip.min.js"></script>
+    <script src="/Content/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="/Content/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/Assets/js/Ngaythangnam.js"></script>
+    <script>
+        $(function () {
+            function getMission() {
+                $.get("/Home/getMission", {}, function (items) {
+                    var tableBody = $("#Mission tbody");
+                    tableBody.empty(); // Xóa nội dung cũ của tbody trước khi thêm dữ liệu mới
+                    for (let i = 0; i < items.length; i++) {
+                        var item = items[i];
+                        var row = "<tr>" +
+                            "<td>" + item[0] + "</td>" +
+                            "<td>" + item[1] + "</td>" +
+                            "<td>" + item[2] + "</td>" +
+                            "<td>" + item[3] + "</td>" +
+                            "<td>" + item[4] + "</td>";
+                        if (item[4] == "Đã hoàn thành") {
+                            row += "<td class='text-center'><button class='done btn btn-outline-success'><i class='ion ion-android-done-all'></i>&nbsp;Đã hoàn thành</button></td>";
+                        }
+                        else {
+                            row += "<td class='text-center'><button class='doneMission btn btn-success' data-id='" + items[i][0] + "' href='#'>Hoàn thành</button></td>";
+                        }
+                        row += "</tr>";
+                        tableBody.append(row);
+                    }
+                    $("#Mission").DataTable({
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                    }).buttons().container().appendTo('#Mission_wrapper .col-md-6:eq(0)');
+                });
+            }
+            getMission();
+            $(document).on("click", "#Mission .doneMission", function (e) {
+                e.preventDefault();
+                if (confirm("Xác nhận hoàn thành nhiệm vụ này ?")) {
+                    var id = parseInt($(this).data("id"));
+                    window.location = "/Home/Done/" + id;
+                }
+            });
+            $(document).on("click", "#Mission .done", function (e) {
+                e.preventDefault();
+                alert("Bạn đã hoàn thành nhiệm vụ này rồi !")
+            });
+        });
+    </script>
+
+}
+
+

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập</title>
+    <link rel="shortcut icon" type="image/png" href="~/Content/images/layout/logo.ico" />
+    
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="~/Content/plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
+    <!--Login cover -->
+    <link href="~/Content/dist/css/LoginCover.css" rel="stylesheet" />
+</head>
+
+
+
+<body class="hold-transition login-page login-cover">
+    <div class="login-box">
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <img src="//elearning.daihoclongan.edu.vn/pluginfile.php/1/theme_remui/logo/1698043839/logo.png" class="navbar-brand-logo logo" id="yui_3_17_2_1_1699351477552_20">
+                <div class="logo-area r-mb-16"></div>
+                <a href="#" class="h1">QUẢN LÝ THIẾT BỊ</a>
+                <div class="logo-area r-mb-16" id="yui_3_17_2_1_1699351477552_21">
+                </div>
+            </div>
+                <!-- /.login-logo -->
+                <div class="card">
+                    <div class="card-body login-card-body">
+                        <p class="login-box-msg">Thông tin tài khoản đăng nhập</p>
+
+                        <form action="@Url.Action("CheckMember","Member", new {area = "Admin"})" method="post">
+                            <div class="input-group mb-3">
+                                <input type="email" name="LoginName" class="form-control" placeholder="Username">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-user"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="password" name="Password" class="form-control" placeholder="Password">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <!-- /.col -->
+                                <div class="offset-7 col-5">
+                                    <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.login-card-body -->
+                </div>
+            </div>
+    </div>
+
+    <!-- /.login-box -->
+    <!-- jQuery -->
+    <script src="~/Content/Admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Content/Admin/lugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="~/Content/Admin/dist/js/adminlte.min.js"></script>
+</body>
+
+</html>

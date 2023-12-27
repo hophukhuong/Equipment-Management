@@ -1,0 +1,160 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<DACS.Context.Room>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-wrapper">
+    @using (Html.BeginForm("Index", "Equipment", FormMethod.Get))
+    {<div class="container">
+            <div class="search">
+                <style>
+                    p {
+                        margin-bottom: 10px;
+                    }
+
+                    input[type="text"] {
+                        padding: 5px;
+                        border: 1px solid #ccc;
+                        border-radius: 4px;
+                        font-size: 14px;
+                    }
+
+                    input[type="submit"] {
+                        padding: 5px 10px;
+                        background-color: #4CAF50;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 14px;
+                    }
+                    .white-text {
+                        color: white;
+                        /* Các thuộc tính CSS khác tùy ý */
+                    }
+                </style>
+                <style>
+                    .table {
+                        border-collapse: collapse;
+                        width: 100%;
+                    }
+
+                        .table th,
+                        .table td {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                        }
+
+                        .table th {
+                            background-color: #f2f2f2;
+                            font-weight: bold;
+                        }
+
+                        .table .action-links {
+                            white-space: nowrap;
+                        }
+
+                            .table .action-links a {
+                                color: white;
+                                text-decoration: none;
+                                padding: 5px 10px;
+                                border-radius: 3px;
+                                background-color: #eee;
+                                margin-right: 5px;
+                            }
+
+                                .table .action-links a:hover {
+                                    background-color: powderblue;
+                                }
+                </style>
+
+
+                
+
+            </div>
+
+        </div>
+    }
+    <section class="content">
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h2 style="font-size: 25px;" class="card-title font-weight-bold pl-3  pt-3">DANH SÁCH PHÒNG</h2>
+
+                    <div class="btn btn-success float-right">
+                        <p class="fas fa-plus mr-2">
+                            <a>
+                                @Html.ActionLink("add new", "Create", null, new { @class = "white-text" })
+
+                            </a>
+                        </p>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+
+                    <table class="table">
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tên phòng
+                            </th>
+                            
+                            <th></th>
+                        </tr>
+                        
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                
+                                <td class="text-center">
+                                    @Html.ActionLink("Sửa", "EditRoom", new { ID = item.ID }, new { @class = "edit-link btn btn-primary" })
+
+                                    @Html.ActionLink("Xóa", "Delete", new { ID = item.ID }, new { @class = "delete-link btn btn-danger" })
+
+                                </td>
+                            </tr>
+
+                        }
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="pagination-container">
+                <span class="page-info">
+                    Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                </span>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item @(Model.PageNumber <= 1 ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber - 1, currentFilter = ViewBag.CurrentFilter })">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= Model.PageCount; i++)
+                        {
+                            <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("Index", new { page = i, currentFilter = ViewBag.CurrentFilter })">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(Model.PageNumber >= Model.PageCount ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("Index", new { page = Model.PageNumber + 1, currentFilter = ViewBag.CurrentFilter })">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</div>
+

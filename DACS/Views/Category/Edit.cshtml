@@ -1,0 +1,173 @@
+﻿@model DACS.Context.Equipment
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content-wrapper" style="min-height: 778px;">
+
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 font-weight-bold">HỆ THỐNG QUẢN LÝ THIẾT BỊ </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Hướng dẫn sử dụng</a></li>
+                    </ol>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+
+
+            <!-- general form elements -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Cập nhật thiết bị</h3>
+                </div>
+
+                @using (Html.BeginForm("Edit", "Equipment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+
+
+                {
+                    @Html.AntiForgeryToken()
+
+            <div class="card-body">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+
+                    <label>ID<span class="text-danger">*</span></label>
+
+                    <input type="hidden" class="form-control" required=""
+                           placeholder="Mã định danh"
+                           name="ID"
+                           value="@Model.ID">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Mã định danh <span class="text-danger">*</span></label>
+
+                    <input type="text" class="form-control" required=""
+                           placeholder="Mã định danh"
+                           name="IDName"
+                           value="@Model.IDName">
+
+                </div>
+
+
+
+
+
+
+
+
+                <div class="form-group">
+
+                    <label>Tên <span class="text-danger">*</span></label>
+
+                    <input type="text" class="form-control"
+                           name="Name"
+                           value="@Model.Name"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Avatar, "Ảnh sản phẩm", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" name="ImageUpload" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Trạng thái <span class="text-danger">*</span></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Status, new { htmlAttributes = new { @class = "control-label col-md-2" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "control-label col-md-2" })
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label>Loại thiết bị<span class="text-danger">(Buộc nhập lại)</span></label>
+                    @Html.DropDownList("CategoryID", (SelectList)ViewBag.CategoryID, "Chọn thiết bị", new { @class = "form-control" })
+                </div>
+
+
+
+
+                <div class="form-group">
+
+                    <label>Giá <span class="text-danger">*</span></label>
+
+                    <input type="text" class="form-control"
+                           name="Price"
+                           value="@Model.Price"
+                           required>
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Ngày tạo<span class="text-danger">*</span></label>
+
+                    <input type="text" class="form-control"
+                           name="CreatedOnUtc"
+                           value="@Model.CreatedOnUtc"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>Hạn bảo hành<span class="text-danger">*</span></label>
+
+                    <input type="text" class="form-control"
+                           name="UpdatedOnUtc"
+                           value="@Model.UpdatedOnUtc"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+                    <label>Địa điểm<span class="text-danger">(Buộc nhập lại)</span></label>
+                    @Html.DropDownList("Location", (SelectList)ViewBag.Location, "Địa điểm", new { @class = "form-control" })
+                </div>
+
+
+
+                <div class="form-group">
+
+                    <label>Số lượng<span class="text-danger">*</span></label>
+
+                    <input type="text" class="form-control"
+                           name="Amount"
+                           value="@Model.Amount"
+                           required>
+
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Tạo" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+                }
+            </div>
+        </div>
+    </section>
+</div>

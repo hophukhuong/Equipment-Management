@@ -1,0 +1,94 @@
+﻿
+@{
+    ViewBag.Title = "Report1";
+    Layout = "~/Views/Shared/_AdminLTE.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h4 class="m-0">  Báo cáo chưa xử lý</h4>
+            </div><!-- /.col -->
+            <!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<div class="card">
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="Report" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Người báo cáo</th>
+                    <th>Mô tả</th>
+                    <th>Ngày báo cáo</th>
+                    <th>Tình trạng</th>
+                    <th>Chức năng</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+@section Css{
+    <link rel="stylesheet" href="/Content/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="/Content/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="/Content/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+}
+@section Js{
+    <script src="/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/Content/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/Content/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/Content/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/Content/plugins/jszip/jszip.min.js"></script>
+    <script src="/Content/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="/Content/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/Content/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="~/Assets/js/Ngaythangnam.js"></script>
+    <script>
+
+        $(function () {
+            function getReport1() {
+                $.get("/Report/getReport1", {}, function (items) {
+                    var tableBody = $("#Report tbody");
+                    tableBody.empty(); // Xóa nội dung cũ của tbody trước khi thêm dữ liệu mới
+                    for (let i = 0; i < items.length; i++) {
+                        var item = items[i];
+                        var row = "<tr>" +
+                            "<td>" + item.Id + "</td>" +
+                            "<td>" + item.Name + "</td>" +
+                            "<td>" + item.Description + "</td>" +
+                            "<td>" + item.ReportDate + "</td>" +
+                            "<td>" + item.Status + "</td>" +
+                            "<td class = 'text-center'><button class='btn btn-success infoListOrder' data-id = '" + item.Id + "' href='#'>Đã xử lý</button></td>" +
+                            "</tr>";
+                        tableBody.append(row);
+                    }
+                    $("#Report").DataTable({
+                        "responsive": true,
+                        "lengthChange": false,
+                        "autoWidth": false,
+                    }).buttons().container().appendTo('#Report_wrapper .col-md-6:eq(0)');
+                });
+            }
+            getReport1();
+            $(document).on("click", "#Report .infoListOrder", function (e) {
+                e.preventDefault();
+                if (confirm("Xác nhận đã xử lý ?")) {
+                    var id = $(this).data("id");
+                    window.location = "/Report/Done/" + id
+                }
+            })
+        });[HasCredentialAtrribute(RoleCode = "view-add-edit-delete")]
+    </script>
+}
+
